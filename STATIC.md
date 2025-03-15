@@ -56,12 +56,9 @@ Within each episode directory, you'll find:
 
 - **title.txt**: Contains the episode title extracted from the source filename
   - Simple text file with just the title (e.g., "Fundraiser", "Oslo")
-  - Created during Step 07 of the processing pipeline
 
 - **frames/** directory: Contains all extracted video frames in PNG format
   - Frame filenames are in the format `frame_XXXXXXXXXX.png` with 10-digit zero padding
-  - Created during the frame extraction process in earlier steps
 
 - **subtitles.csv**: CSV file containing processed subtitle data
   - Contains columns for subtitle number, timestamp, content, and frame numbers
-  - Created during the subtitle processing steps

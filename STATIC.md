@@ -5,7 +5,7 @@ The static directory contains a hierarchical organization of TV show data, with 
 ## Directory Structure
 
 ```
-{destination_directory}/
+static/
 │
 ├── subtitles.db                      # SQLite database with subtitles and episodes tables
 │

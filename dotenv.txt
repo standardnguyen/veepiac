@@ -1,0 +1,17 @@
+# Environment settings
+VEEPIAC_ENV=development
+
+# Paths
+VEEPIAC_STATIC_DIR=./static
+VEEPIAC_DB_PATH=./static/subtitles.db
+
+# Server settings
+VEEPIAC_HOST=127.0.0.1
+VEEPIAC_PORT=5000
+VEEPIAC_DEBUG=true
+
+# Config file location (optional)
+VEEPIAC_CONFIG=./config.json
+
+# CDN URL for media files
+VEEPIAC_CDN_URL=https://cdn.veepiac.com

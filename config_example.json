@@ -1,0 +1,27 @@
+{
+  "environment": "development",
+  "static_dir": "./static",
+  "database_path": "./static/subtitles.db",
+  "dev_static_drive": "D",
+  "media_output_dir": "./media_output",
+  "font_dir": "./fonts",
+  "server": {
+    "host": "127.0.0.1",
+    "port": 5000,
+    "debug": true
+  },
+  "api": {
+    "version": "v1",
+    "rate_limits": {
+      "free": 100,
+      "standard": 1000,
+      "premium": 5000
+    }
+  },
+  "cdn": {
+    "base_url": "https://cdn.veepiac.com",
+    "file_expiry_days": 7
+  },
+  "bypass_api_key": true,
+  "bypass_rate_limit": true
+}

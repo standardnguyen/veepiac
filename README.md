@@ -164,4 +164,4 @@ For testing:
 
 ## License
 
-[Standard’s Petty Software License v0.1](https://github.com/standardnguyen/licenses/blob/main/LICENSE.md)
+[Standard’s Petty Software License v0.1](https://github.com/standardnguyen/licenses/blob/main/petty/v1.0/LICENSE.md)

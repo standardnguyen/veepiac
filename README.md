@@ -1,152 +1,167 @@
-# Veepiac API
+# Veepiac
 
-A RESTful API for searching and creating media from Veep TV show dialogue, inspired by Frinkiac.
+A searchable database of Veep TV show dialogue with synchronized video frames, allowing you to search for quotes, create memes, GIFs, and clips from the show.
+
+![Veepiac](https://via.placeholder.com/800x400?text=Veepiac+Screenshot)
+
+## About
+
+Veepiac is inspired by [Frinkiac](https://frinkiac.com/) (for The Simpsons) and similar tools that allow fans to search for their favorite quotes and turn them into shareable content. This project is not affiliated with HBO or the creators of Veep.
+
+## Features
+
+- **Search Engine**: Find quotes from Veep by searching for dialogue
+- **Frame Viewer**: See the exact scene from any line of dialogue
+- **Meme Generator**: Add custom text to create shareable memes
+- **GIF Creator**: Generate animated GIFs from scene sequences
+- **Video Clip Maker**: Create short video clips with audio (premium feature)
+- **Episode Browser**: Browse all quotes from a specific episode
+
+## Project Structure
+
+The project consists of two main components:
+
+- **Backend API** (Python/Flask): Handles searches, manages the database, and generates media
+- **Frontend UI** (React/TypeScript): Provides a user-friendly interface
+
+```
+├── backend/             # Flask API server
+│   ├── app.py           # Main application entry point
+│   ├── config.py        # Configuration handling
+│   ├── database.py      # Database connection & queries
+│   ├── media_generator.py # Meme/GIF/clip generation
+│   └── ...
+├── frontend/            # React application
+│   ├── public/          # Static assets
+│   ├── src/             # Source code
+│   │   ├── api/         # API client
+│   │   ├── components/  # Reusable components
+│   │   ├── pages/       # Page components
+│   │   └── ...
+│   └── ...
+└── ...
+```
 
 ## Installation
 
+### Prerequisites
+
+- Python 3.8+
+- Node.js 14+
+- FFmpeg (for media generation)
+- SQLite database with Veep subtitles
+- Video frames extracted from episodes
+
+### Backend Setup
+
 1. Clone the repository
-    ```
-    git clone https://github.com/yourusername/veepiac.git
-    cd veepiac
-    ```
+   ```bash
+   git clone https://github.com/yourusername/veepiac.git
+   cd veepiac
+   ```
 
-2. Create a virtual environment
-    ```
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
+2. Create and activate a virtual environment
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-3. Install dependencies
-    ```
-    pip install -r requirements.txt
-    ```
+3. Install Python dependencies
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
 
 4. Create configuration file
-    ```
-    cp config.example.json config.json
-    ```
+   ```bash
+   cp config.example.json config.json
+   ```
 
 5. Edit `config.json` to match your environment
-    - In development mode, you can set `dev_static_drive` to point to a different drive where your static files are located
-    - Update paths in the config to match your environment
+   - Set proper paths for static files and database
+   - Configure server settings
 
-## Directory Structure
+### Frontend Setup
 
-The expected directory structure for static content follows this pattern:
+1. Install Node.js dependencies
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-```
-static/
-│
-├── subtitles.db                      # SQLite database with subtitles and episodes tables
-│
-├── Season 1/
-│   ├── S01E01/                       # Episode directory
-│   │   ├── title.txt                 # Episode title
-│   │   ├── video.mkv                 # Episode video file
-│   │   ├── frames/                   # Extracted video frames
-│   │   │   ├── frame_0000000001.jpg
-│   │   │   └── ...
-│   │   ├── thumbnails/               # Thumbnail images
-│   │   │   ├── thumb_0000000001.jpg
-│   │   │   └── ...
-│   │   └── subtitles.csv             # Processed subtitle data
-...
-```
+2. Create production build
+   ```bash
+   npm run build
+   ```
 
-## Running the Server
+## Running the Application
 
-Start the development server:
-```
-python app.py
-```
+### Development Mode
 
-For production, use Gunicorn:
-```
-gunicorn app:app
-```
+1. Start the backend server
+   ```bash
+   cd backend
+   python app.py
+   ```
 
-## API Endpoints
+2. In a separate terminal, start the frontend development server
+   ```bash
+   cd frontend
+   npm start
+   ```
 
-### Search Quotes
-```
-GET /v1/search?query=search_term&page=1&limit=20
-```
+3. Access the application at http://localhost:3000
 
-### Get Subtitle Details
-```
-GET /v1/subtitle/12345?frames_before=3&frames_after=3&subtitles_before=2&subtitles_after=2
-```
+### Production Mode
 
-### Get Episode Subtitles
-```
-GET /v1/episode/S01E04?page=1&limit=50
-```
+1. Build the frontend
+   ```bash
+   cd frontend
+   npm run build
+   ```
 
-### Create Meme
-```
-POST /v1/create/meme
-Content-Type: application/json
+2. Configure a production web server (Nginx, Apache) to serve the static files from the build directory
 
-{
-  "subtitle_id": 12345,
-  "frame_id": 12346,
-  "text": "what the vice president does",
-  "font": "impact",
-  "text_color": "#ffffff",
-  "outline_color": "#000000"
-}
-```
+3. Run the backend API with Gunicorn
+   ```bash
+   cd backend
+   gunicorn --bind 0.0.0.0:5000 wsgi:app
+   ```
 
-### Create GIF
-```
-POST /v1/create/gif
-Content-Type: application/json
+## API Documentation
 
-{
-  "subtitle_id": 12345,
-  "start_frame": 12342,
-  "end_frame": 12348,
-  "caption": true,
-  "speed": 1.0,
-  "quality": "medium"
-}
-```
+For detailed API documentation, see [API.md](./API.md)
 
-### Create Clip
-```
-POST /v1/create/clip
-Content-Type: application/json
+## Static Directory Structure
 
-{
-  "subtitle_id": 12345,
-  "start_time": "00:12:32,000",
-  "end_time": "00:12:39,500",
-  "caption": true,
-  "format": "mp4",
-  "quality": "medium"
-}
-```
+The application expects a specific directory structure for frame images and subtitle data. For details, see [STATIC.md](./STATIC.md)
 
-## API Key Authentication
+## Database Schema
 
-In production, access to the API requires an API key passed via the `X-API-Key` header. For development, you can set `bypass_api_key` to `true` in your config.json.
+For information about the subtitle database schema, see [SCHEMA.md](./SCHEMA.md)
 
-## Rate Limits
+## Configuration Options
 
-- Free tier: 100 requests per day
-- Standard tier: 1,000 requests per day
-- Premium tier: 5,000 requests per day
+Edit `config.json` to modify the following settings:
 
-## Development vs Production
+- `environment`: "development" or "production"
+- `static_dir`: Path to the directory containing episode frames and subtitles
+- `database_path`: Path to the SQLite database file
+- `server`: Configuration for the Flask server
+  - `host`: Server hostname/IP (default: "127.0.0.1")
+  - `port`: Server port (default: 5000)
+  - `debug`: Enable debug mode (default: true in development)
+- `api`: API-specific settings
+  - `rate_limits`: Request limits for different subscription tiers
 
-The configuration system handles differences between development and production environments:
+## Authentication
 
-- In development:
-  - Static files can be on a different drive (set with `dev_static_drive`)
-  - API key validation can be bypassed
-  - Rate limiting can be bypassed
+The API uses API keys for authentication. In development mode, you can bypass authentication by setting `bypass_api_key: true` in your configuration.
 
-- In production:
-  - Full API key validation is enabled
-  - Rate limiting is enforced
-  - Debug mode is disabled
+For testing:
+- Use `test-standard` as the API key for standard tier
+- Use `test-premium` as the API key for premium tier
+
+## License
+
+[Standard’s Petty Software License v0.1](https://github.com/standardnguyen/licenses/blob/main/LICENSE.md)

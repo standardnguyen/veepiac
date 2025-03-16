@@ -164,4 +164,7 @@ For testing:
 
 ## License
 
-[Standard’s Petty Software License v0.1](https://github.com/standardnguyen/licenses/blob/main/petty/v1.0/LICENSE.md)
+[Standard’s Petty Software License v0.1](https://github.com/standardnguyen/licenses/blob/main/petty/v1.0/LICENSE.md) grants you permission to use, remix, distribute this software as long as you:
+
+1. attach a copy of the license and distribute the code under the same license
+2. you aren't on the [blacklist](./STANDARDSBLACKLIST.md) like Armand Domalewski
